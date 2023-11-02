@@ -1,0 +1,36 @@
+class VacuumCleaner:
+    def __init__(self):
+        self.position = [0, 0]  
+
+    def move_left(self):
+        self.position[0] -= 1
+
+    def move_right(self):
+        self.position[0] += 1
+
+    def move_up(self):
+        self.position[1] += 1
+
+    def move_down(self):
+        self.position[1] -= 1
+
+    def clean(self):
+        print(f"Cleaning position {self.position[0]}, {self.position[1]}")
+
+
+room_width = 10
+room_height = 10
+
+vacuum = VacuumCleaner()
+
+for _ in range(room_height):
+    for _ in range(room_width):
+        vacuum.clean()
+        vacuum.move_right()
+    vacuum.move_down()
+    for _ in range(room_width):
+        vacuum.clean()
+        vacuum.move_left()
+    vacuum.move_down()
+
+print("Cleaning complete!")
