@@ -1,0 +1,27 @@
+def water_jug_puzzle(small_jug, big_jug, target):
+    small = 0
+    big = 0
+
+    while big != target:
+        if big == 0:
+            print(f"Fill the {big_jug}-liter jug")
+            big = big_jug
+
+        while big > 0 and small != small_jug:
+            print(f"Pour water from the {big_jug}-liter jug to the {small_jug}-liter jug")
+            small += 1
+            big -= 1
+
+        if small == small_jug:
+            print(f"Empty the {small_jug}-liter jug")
+            small = 0
+
+        print("------")
+
+    print(f"Desired amount of {target} liters achieved in the {big_jug}-liter jug!")
+
+small_jug_size = 3
+big_jug_size = 5
+target_amount = 4
+
+water_jug_puzzle(small_jug_size, big_jug_size, target_amount)
