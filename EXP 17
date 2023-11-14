@@ -1,0 +1,7 @@
+sum(1, 1).  % Base case: The sum of 1 is 1.
+
+sum(N, Result) :-
+    N > 1,
+    N1 is N - 1,
+    sum(N1, SubResult),
+    Result is SubResult + N.
