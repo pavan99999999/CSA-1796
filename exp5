@@ -1,0 +1,53 @@
+print("MISSIONARIES AND CANNIBAL PROBLEM")
+print("B.Vamsikrishna-192211659")
+from collections import deque
+initial_state = (3, 3, 1)  
+goal_state = (0, 0, 0)     
+max_missionaries = 3
+max_cannibals = 3
+def is_valid(state):
+    missionaries_left, cannibals_left, boat_side = state
+    if missionaries_left < 0 or missionaries_left > max_missionaries:
+        return False
+    if cannibals_left < 0 or cannibals_left > max_cannibals:
+        return False
+    if missionaries_left < cannibals_left and missionaries_left > 0:
+        return False
+    if max_missionaries - missionaries_left < max_cannibals - cannibals_left and max_missionaries - missionaries_left > 0:
+        return False
+    return True
+def generate_next_states(state):
+    states = []
+    missionaries_left, cannibals_left, boat_side = state
+    for m in range(3):
+        for c in range(3):
+            if 1 <= m + c <= 2:
+                new_missionaries_left = missionaries_left - m if boat_side == 1 else missionaries_left + m
+                new_cannibals_left = cannibals_left - c if boat_side == 1 else cannibals_left + c
+                new_boat_side = 1 - boat_side
+                new_state = (new_missionaries_left, new_cannibals_left, new_boat_side)
+                if is_valid(new_state):
+                    states.append(new_state)
+    return states
+def bfs():
+    visited = set()
+    queue = deque([(initial_state, [])])
+    while queue:
+        state, path = queue.popleft()
+        if state == goal_state:
+            return path
+        visited.add(state)
+        for next_state in generate_next_states(state):
+            if next_state not in visited:
+                queue.append((next_state, path + [next_state]))
+    return None
+def main():
+    solution_path = bfs()
+    if solution_path:
+        print("Solution:")
+        for state in solution_path:
+            print(state)
+    else:
+        print("No solution found.")
+if __name__ == "__main__":
+    main()
